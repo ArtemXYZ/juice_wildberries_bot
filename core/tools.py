@@ -1,7 +1,71 @@
 # """
 #     pass
 # """
-#
+
+
+import asyncio
+import aiohttp
+
+from datetime import datetime
+
+# ----------------------------------------------------------------------------------------------------------------------
+async def get_response_aiohttp(url):
+    """
+       Функция для выполнения асинхронных запросов.
+    """
+
+    # try:
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            return await response.json()
+
+    # except Exception as e:
+    #     print(f'Ошибка в "change_weather.get_response_aiohttp": {e}')
+
+
+# 1. --------------------------------------- Получение точки сетки:
+async def get_grid_json(latitude, longitude):
+    """
+       Получение координатной точки.
+       # GET https://api.weather.gov/points/40.7128,-74.0060'
+
+        # Пример ответа (сокращено):
+        json = {
+          "properties": {
+            "gridId": "OKX",
+            "gridX": 33,
+            "gridY": 35,
+            "forecastHourly": "https://api.weather.gov/gridpoints/OKX/33,35/forecast/hourly"
+          }
+        }
+    """
+
+    try:
+
+        return await get_response_aiohttp(f"https://api.weather.gov/points/{latitude},{longitude}")
+
+    except Exception as e:
+        print(f'Ошибка в "change_weather.get_grid_point": {e}')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # import requests
 # import json
 # import base64  # переопределяется (зацикливание)
