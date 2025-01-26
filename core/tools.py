@@ -9,35 +9,51 @@ import aiohttp
 from datetime import datetime
 
 # ----------------------------------------------------------------------------------------------------------------------
-async def get_response_aiohttp(url):
+async def get_response_aiohttp(url, cookies, headers): # , proxy, timeout
     """
        Функция для выполнения асинхронных запросов.
+       json_serialize
     """
 
-    # try:
 
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            return await response.json()
+    try:
 
-    # except Exception as e:
-    #     print(f'Ошибка в "change_weather.get_response_aiohttp": {e}')
+        async with aiohttp.ClientSession(
 
+                cookies if cookies else None,
+                headers if headers else None,
+
+        ) as session:  # , proxy, timeout
+            async with session.get(url) as response:
+                return await response.json()
+
+    except Exception as e:
+        print(f'Ошибка выполнения запрос: {e}')
+
+
+
+http_wb = 'https://global.wildberries.ru/catalog?search=джинсы+женские'
+query = ''
+
+# Поиск работает через адресную строку
+http_wb2 = f'https://global.wildberries.ru/catalog?search={query}'
+
+# Фильтры
+sdfsd ='https://search.wb.ru/exactmatch/ru/common/v7/search?query=yfeiybrb&resultset=filters&appType=128&curr=rub&lang=ru&dest=-1257786&spp=30'
+
+#  Категории или теги
+asgag = 'https://search-tags.wb.ru/search-tags/api/v2/search/query?query=%D0%BD%D0%B0%D1%83%D1%88%D0%BD%D0%B8%D0%BA%D0%B8'
+
+# возвращает данные по товару - основной запрос.
+fdadf = 'https://search.wb.ru/exactmatch/ru/common/v5/search?query=yfeiybrb&resultset=catalog&limit=60&sort=popular&page=1&appType=128&curr=rub&lang=ru&dest=-1257786&spp=30'
 
 # 1. --------------------------------------- Получение точки сетки:
-async def get_grid_json(latitude, longitude):
+async def get_json(latitude, longitude):
     """
-       Получение координатной точки.
-       # GET https://api.weather.gov/points/40.7128,-74.0060'
 
         # Пример ответа (сокращено):
         json = {
-          "properties": {
-            "gridId": "OKX",
-            "gridX": 33,
-            "gridY": 35,
-            "forecastHourly": "https://api.weather.gov/gridpoints/OKX/33,35/forecast/hourly"
-          }
+        ...
         }
     """
 
